@@ -79,6 +79,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *firefox[]  = { "firefox", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
+static const char *passmenu[] = { "passmenu", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -120,6 +121,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = firefox} },
     { MODKEY,                       XK_x,      spawn,          {.v = powermenu } },
+    { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenu } },
 };
 
 /* button definitions */
