@@ -12,28 +12,17 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
 static const char col_blue[]        = "#69a2ff";
-static const char col1[]            = "#ffffff";
-static const char col2[]            = "#ffffff";
-static const char col3[]            = "#ffffff";
-static const char col4[]            = "#ffffff";
-static const char col5[]            = "#ffffff";
-static const char col6[]            = "#ffffff";
-
-enum { SchemeNorm, SchemeCol1, SchemeCol2, SchemeCol3, SchemeCol4,
-       SchemeCol5, SchemeCol6, SchemeSel }; /* color schemes */
 
 static const char *colors[][3]      = {
-    /*               fg         bg         border   */
-    [SchemeNorm]  = { col_gray3, col_gray1, col_gray2 },
-    [SchemeCol1]  = { col1,      col_gray1, col_gray2 },
-    [SchemeCol2]  = { col2,      col_gray1, col_gray2 },
-    [SchemeCol3]  = { col3,      col_gray1, col_gray2 },
-    [SchemeCol4]  = { col4,      col_gray1, col_gray2 },
-    [SchemeCol5]  = { col5,      col_gray1, col_gray2 },
-    [SchemeCol6]  = { col6,      col_gray1, col_gray2 },
-    [SchemeSel]   = { col_blue,  col_gray1, col_blue  },
+    /*                    fg         bg         border   */
+    [SchemeNorm]     = { col_gray3, col_gray1, col_gray2 },
+    [SchemeSel]      = { col_blue,  col_gray1, col_blue  },
+	[SchemeStatus]   = { col_gray3, col_gray1, "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { col_blue,  col_gray1, "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm] = { col_gray3, col_gray1, "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  = { col_gray4, col_gray1, "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm] = { col_gray3, col_gray1, "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
