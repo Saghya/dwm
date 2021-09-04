@@ -6,10 +6,10 @@ static const unsigned int gappx     = 16;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 23;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will use user_bh as bar height */
-static const char *fonts[]          = { "UbuntuMono Nerd Font:size=13" };
-static const char dmenufont[]       = "UbuntuMono Nerd Font:size=14";
-static const char col_gray1[]       = "#222222";
+static const int user_bh            = 23;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const char *fonts[]          = { "Iosevka Nerd Font:size=13" };
+static const char dmenufont[]       = "Iosevka Nerd Font:size=14";
+static const char col_gray1[]       = "#222430";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]   = { "alacritty", NULL };
-static const char *firefox[]   = { "firefox", NULL };
+static const char *browser[]   = { "brave", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
 static const char *passmenu[]  = { "passmenu", NULL };
 
@@ -109,7 +109,7 @@ static Key keys[] = {
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = firefox} },
+    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = browser} },
     { MODKEY,                       XK_x,      spawn,          {.v = powermenu } },
     { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenu } },
 };
