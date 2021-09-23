@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { ".", ".", ".", ".", ".", ".", ".", ".", "." };
+static const char *tags[] = { ".", ".", ".", ".", "." };
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -65,11 +65,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]   = { "alacritty", NULL };
-static const char *browser[]   = { "brave", NULL };
-static const char *powermenu[] = { "powermenu", NULL };
-static const char *passmenu[]  = { "passmenu", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, NULL };
+static const char *termcmd[]    = { "alacritty", NULL };
+static const char *browser[]    = { "brave", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -104,14 +102,12 @@ static Key keys[] = {
     TAGKEYS(                        XK_3,                      2)
     TAGKEYS(                        XK_4,                      3)
     TAGKEYS(                        XK_5,                      4)
-    TAGKEYS(                        XK_6,                      5)
-    TAGKEYS(                        XK_7,                      6)
-    TAGKEYS(                        XK_8,                      7)
-    TAGKEYS(                        XK_9,                      8)
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = browser} },
-    { MODKEY,                       XK_x,      spawn,          {.v = powermenu } },
-    { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenu } },
+    { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
+    { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
+    { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png -e 'xclip -selection clipboard -t image/png -i $f'") },
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
 };
 
 /* button definitions */
