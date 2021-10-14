@@ -7,7 +7,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 23;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const char *fonts[]          = { "Iosevka Nerd Font:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12" };
 static const char col_gray1[]       = "#222430";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -94,9 +94,9 @@ static Key keys[] = {
     { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
     { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
     { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+    { MODKEY|ShiftMask,             XK_j,      setgaps,        {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_k,      setgaps,        {.i = +1 } },
+    { MODKEY,                       XK_Home,   setgaps,        {.i =  0 } },
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
     TAGKEYS(                        XK_3,                      2)
@@ -107,7 +107,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager} },
     { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
     { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
-    { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png -e 'xclip -selection clipboard -t image/png -i $f'") },
+    { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") },
     { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
 };
 
