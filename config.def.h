@@ -66,7 +66,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]      = { "alacritty", NULL };
-static const char *browser[]      = { "brave", NULL };
+static const char *browser[]      = { "firefox", NULL };
 static const char *file_manager[] = { "alacritty", "-e", "ranger", NULL };
 
 static Key keys[] = {
@@ -106,7 +106,6 @@ static Key keys[] = {
     { MODKEY,                       XK_b,      spawn,          {.v = browser} },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager} },
     { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
-    { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
     { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") },
     { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
 };
