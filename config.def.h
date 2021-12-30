@@ -36,7 +36,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        2 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        2 },
-	{ "Pavucontrol",NULL,     NULL,       0,            1,           -1,        850,50,500,400,       2 },
+	{ "Pavucontrol",NULL,     NULL,       0,            1,           -1,        850,50,600,400,       2 },
 	{ "Lxappearance",NULL,    NULL,       0,            1,           -1,        250,100,-1,-1,        2 },
 };
 
