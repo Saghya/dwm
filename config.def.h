@@ -33,9 +33,11 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
-    /* class      instance    title       tags mask     isfloating   monitor */
-    { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-    { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
+	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        2 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        2 },
+	{ "Pavucontrol",NULL,     NULL,       0,            1,           -1,        850,50,-1,-1,         2 },
+	{ "Lxappearance",NULL,    NULL,       0,            1,           -1,        250,100,-1,-1,        2 },
 };
 
 /* layout(s) */
@@ -62,12 +64,14 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+#define TERMINAL "alacritty"
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]      = { "alacritty", NULL };
+static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, "-c", NULL };
+static const char *termcmd[]      = { TERMINAL, NULL };
 static const char *browser[]      = { "firefox", NULL };
-static const char *file_manager[] = { "alacritty", "-e", "ranger", NULL };
+static const char *file_manager[] = { TERMINAL, "-e", "ranger", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
