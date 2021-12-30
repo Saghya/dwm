@@ -1309,6 +1309,7 @@ nexttiled(Client *c)
     return c;
 }
 
+/*
 void
 pop(Client *c)
 {
@@ -1317,6 +1318,7 @@ pop(Client *c)
     focus(c);
     arrange(c->mon);
 }
+*/
 
 void
 propertynotify(XEvent *e)
