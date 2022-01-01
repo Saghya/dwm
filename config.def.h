@@ -77,7 +77,7 @@ static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,             XK_s,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -112,6 +112,8 @@ static Key keys[] = {
     { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
     { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") },
     { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
+    { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("networkmanager_dmenu -l 20") },
+    { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("dmenu-bluetooth") },
 };
 
 /* button definitions */
