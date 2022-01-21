@@ -110,6 +110,7 @@ static Key keys[] = {
     { MODKEY,                       XK_b,      spawn,          {.v = browser} },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager} },
     { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
+    { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
     { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") },
     { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
     { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("networkmanager_dmenu -l 20") },
