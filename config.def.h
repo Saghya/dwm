@@ -111,8 +111,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager} },
     { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
     { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
-    { 0,                            XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") },
-    { MODKEY,                       XK_Print,  spawn,          SHCMD("scrot --silent '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -t image/png -i $f'") },
+    { 0,                            XK_Print,  spawn,          SHCMD("(maim --hidecursor | tee /tmp/$(date +%s).png | xclip -selection clipboard -t image/png) && notify-send \"Screenshot saved to /tmp\"") },
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("(maim --select -k | tee /tmp/$(date +%s).png | xclip -selection clipboard -t image/png) && notify-send \"Screenshot saved to /tmp\"") },
+    { MODKEY|ShiftMask,             XK_Print,  spawn,          SHCMD("(maim -i $(xdotool getactivewindow) | tee /tmp/$(date +%s).png | xclip -selection clipboard -t image/png) && notify-send \"Screenshot saved to /tmp\"") },
     { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("networkmanager_dmenu -l 20") },
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("dmenu-bluetooth") },
 };
