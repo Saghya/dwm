@@ -1,6 +1,6 @@
-diff -ruN dwm-6.2-ori/config.def.h dwm-6.2/config.def.h
---- dwm-6.2-ori/config.def.h	2019-02-02 18:25:28.000000000 +0530
-+++ dwm-6.2/config.def.h	2020-12-27 19:45:35.127385861 +0530
+diff -ruN dwm-6.3-ori/config.def.h dwm-6.3/config.def.h
+--- dwm-6.3-ori/config.def.h	2021-07-14 15:38:10.535723837 +0530
++++ dwm-6.3/config.def.h	2022-02-15 22:58:57.494413995 +0530
 @@ -12,10 +12,26 @@
  static const char col_gray3[]       = "#bbbbbb";
  static const char col_gray4[]       = "#eeeeee";
@@ -30,7 +30,7 @@ diff -ruN dwm-6.2-ori/config.def.h dwm-6.2/config.def.h
  };
  
  /* tagging */
-@@ -103,7 +119,9 @@
+@@ -104,7 +120,9 @@
  	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
  	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
  	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
@@ -41,9 +41,9 @@ diff -ruN dwm-6.2-ori/config.def.h dwm-6.2/config.def.h
  	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
  	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
  	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
---- dwm-6.2-ori/dwm.c	2019-02-02 18:25:28.000000000 +0530
-+++ dwm-6.2/dwm.c	2021-06-21 17:50:13.520152649 +0530
+diff -ruN dwm-6.3-ori/dwm.c dwm-6.3/dwm.c
+--- dwm-6.3-ori/dwm.c	2021-12-28 13:34:24.695329759 +0530
++++ dwm-6.3/dwm.c	2022-02-15 23:02:46.767469027 +0530
 @@ -40,6 +40,7 @@
  #include <X11/extensions/Xinerama.h>
  #endif /* XINERAMA */
@@ -79,7 +79,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	Client *clients;
  	Client *sel;
  	Client *stack;
-@@ -205,6 +213,7 @@
+@@ -206,6 +214,7 @@
  static void seturgent(Client *c, int urg);
  static void showhide(Client *c);
  static void sigchld(int unused);
@@ -87,7 +87,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  static void spawn(const Arg *arg);
  static void tag(const Arg *arg);
  static void tagmon(const Arg *arg);
-@@ -219,6 +228,7 @@
+@@ -220,6 +229,7 @@
  static void updatebarpos(Monitor *m);
  static void updatebars(void);
  static void updateclientlist(void);
@@ -95,7 +95,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  static int updategeom(void);
  static void updatenumlockmask(void);
  static void updatesizehints(Client *c);
-@@ -236,12 +246,15 @@
+@@ -237,12 +247,15 @@
  
  /* variables */
  static const char broken[] = "broken";
@@ -113,7 +113,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  static unsigned int numlockmask = 0;
  static void (*handler[LASTEvent]) (XEvent *) = {
  	[ButtonPress] = buttonpress,
-@@ -416,13 +429,13 @@
+@@ -417,13 +430,13 @@
  void
  buttonpress(XEvent *e)
  {
@@ -129,7 +129,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	/* focus monitor if necessary */
  	if ((m = wintomon(ev->window)) && m != selmon) {
  		unfocus(selmon->sel, 1);
-@@ -430,25 +443,29 @@
+@@ -431,25 +444,29 @@
  		focus(NULL);
  	}
  	if (ev->window == selmon->barwin) {
@@ -142,7 +142,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
 -			arg.ui = 1 << i;
 -		} else if (ev->x < x + blw)
 -			click = ClkLtSymbol;
--		else if (ev->x > selmon->ww - TEXTW(stext))
+-		else if (ev->x > selmon->ww - (int)TEXTW(stext))
 -			click = ClkStatusText;
 -		else
 -			click = ClkWinTitle;
@@ -173,22 +173,22 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	for (i = 0; i < LENGTH(buttons); i++)
  		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
  		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
-@@ -695,7 +712,7 @@
+@@ -696,7 +713,7 @@
  void
  drawbar(Monitor *m)
  {
--	int x, w, sw = 0;
+-	int x, w, tw = 0;
 +	int x, w;
  	int boxs = drw->fonts->h / 9;
  	int boxw = drw->fonts->h / 6 + 2;
  	unsigned int i, occ = 0, urg = 0;
-@@ -703,9 +720,32 @@
+@@ -707,9 +724,32 @@
  
  	/* draw status first so it can be overdrawn by tags later */
  	if (m == selmon) { /* status is only drawn on selected monitor */
 -		drw_setscheme(drw, scheme[SchemeNorm]);
--		sw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
--		drw_text(drw, m->ww - sw, 0, sw, bh, 0, stext, 0);
+-		tw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
+-		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
 +                char *stc = stextc;
 +                char *stp = stextc;
 +                char tmp;
@@ -218,7 +218,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	}
  
  	for (c = m->clients; c; c = c->next) {
-@@ -724,11 +764,17 @@
+@@ -728,11 +768,17 @@
  				urg & 1 << i);
  		x += w;
  	}
@@ -227,7 +227,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	drw_setscheme(drw, scheme[SchemeNorm]);
  	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
  
--	if ((w = m->ww - sw - x) > bh) {
+-	if ((w = m->ww - tw - x) > bh) {
 +        if (m == selmon) {
 +                blw = w, ble = x;
 +                w = m->ww - wstext - x;
@@ -238,7 +238,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  		if (m->sel) {
  			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
  			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-@@ -1119,17 +1165,24 @@
+@@ -1123,17 +1169,24 @@
  motionnotify(XEvent *e)
  {
  	static Monitor *mon = NULL;
@@ -271,7 +271,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  }
  
  void
-@@ -1564,6 +1617,7 @@
+@@ -1568,6 +1621,7 @@
  	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
  	/* init cursors */
  	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
@@ -279,7 +279,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
  	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
  	/* init appearance */
-@@ -1637,6 +1691,40 @@
+@@ -1641,6 +1695,37 @@
  }
  
  void
@@ -295,23 +295,20 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
 +        fl.l_whence = SEEK_SET;
 +        fl.l_start = 0;
 +        fl.l_len = 0;
-+        if (fd == -1) {
-+                if ((fd = open(DWMBLOCKSLOCKFILE, O_RDONLY)) == -1)
-+                        return;
-+                if (fcntl(fd, F_GETLK, &fl) == -1 || fl.l_type == F_UNLCK)
-+                        return;
-+        } else {
-+                if (fcntl(fd, F_GETLK, &fl) == -1)
-+                        return;
-+                if (fl.l_type == F_UNLCK) {
-+                        close(fd);
-+                        if ((fd = open(DWMBLOCKSLOCKFILE, O_RDONLY)) == -1)
-+                                return;
-+                        fl.l_type = F_WRLCK;
-+                        if (fcntl(fd, F_GETLK, &fl) == -1 || fl.l_type == F_UNLCK)
-+                                return;
-+                }
++        if (fd != -1) {
++                if (fcntl(fd, F_GETLK, &fl) != -1 && fl.l_type == F_WRLCK)
++                        goto signal;
++                close(fd);
++                fl.l_type = F_WRLCK;
 +        }
++        if ((fd = open(DWMBLOCKSLOCKFILE, O_RDONLY | O_CLOEXEC)) == -1)
++                return;
++        if (fcntl(fd, F_GETLK, &fl) == -1 || fl.l_type != F_WRLCK) {
++                close(fd);
++                fd = -1;
++                return;
++        }
++signal:
 +        sv.sival_int = (dwmblockssig << 8) | arg->i;
 +        sigqueue(fl.l_pid, SIGRTMIN, sv);
 +}
@@ -320,7 +317,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  spawn(const Arg *arg)
  {
  	if (arg->v == dmenucmd)
-@@ -1805,7 +1893,7 @@
+@@ -1811,7 +1896,7 @@
  	XSetWindowAttributes wa = {
  		.override_redirect = True,
  		.background_pixmap = ParentRelative,
@@ -329,7 +326,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  	};
  	XClassHint ch = {"dwm", "dwm"};
  	for (m = mons; m; m = m->next) {
-@@ -1847,6 +1935,41 @@
+@@ -1853,6 +1938,41 @@
  				(unsigned char *) &(c->win), 1);
  }
  
@@ -371,7 +368,7 @@ diff -ruN dwm-6.2-ori/dwm.c dwm-6.2/dwm.c
  int
  updategeom(void)
  {
-@@ -1987,9 +2110,27 @@
+@@ -1993,9 +2113,27 @@
  void
  updatestatus(void)
  {
