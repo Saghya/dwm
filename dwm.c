@@ -102,7 +102,6 @@ struct Client {
     int bw, oldbw;
     unsigned int tags;
     int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
-    int floatborderpx;
     int hasfloatbw;
     Client *next;
     Client *snext;
@@ -155,7 +154,6 @@ typedef struct {
     int isfloating;
     int monitor;
     int floatx, floaty, floatw, floath;
-    int floatborderpx;
 } Rule;
 
 /* function declarations */
@@ -333,10 +331,6 @@ applyrules(Client *c)
         {
             c->isfloating = r->isfloating;
             c->tags |= r->tags;
-            if (r->floatborderpx >= 0) {
-                c->floatborderpx = r->floatborderpx;
-                c->hasfloatbw = 1;
-            }
             if (r->isfloating) {
                 if (r->floatx >= 0) c->x = c->mon->mx + r->floatx;
                 if (r->floaty >= 0) c->y = c->mon->my + r->floaty;

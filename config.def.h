@@ -18,11 +18,11 @@ static const char *colors[][3]      = {
     /*                    fg         bg         border   */
     [SchemeNorm]     = { col_gray3, col_gray1, col_gray2 },
     [SchemeSel]      = { col_blue,  col_gray1, col_blue  },
-    [SchemeStatus]   = { col_gray3, col_gray1, "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-    [SchemeTagsSel]  = { col_blue,  col_gray1, "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm] = { col_gray3, col_gray1, "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  = { col_gray4, col_gray1, "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm] = { col_gray3, col_gray1, "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+    [SchemeStatus]   = { col_gray3, col_gray1, "#000000" }, // Statusbar right {text,background,not used but cannot be empty}
+    [SchemeTagsSel]  = { col_blue,  col_gray1, "#000000" }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm] = { col_gray3, col_gray1, "#000000" }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  = { col_gray4, col_gray1, "#000000" }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm] = { col_gray3, col_gray1, "#000000" }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
@@ -33,18 +33,18 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
-    /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
-    { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        2 },
-    { "Chromium",  NULL,      NULL,       1 << 1,       0,           -1,        50,50,500,500,        2 },
-    { "Pavucontrol",NULL,     NULL,       0,            1,           -1,        850,50,600,400,       2 },
-    { "Lxappearance",NULL,    NULL,       0,            1,           -1,        250,100,-1,-1,        2 },
+    /* class       instance    title       tags mask     isfloating   monitor    float x, y, w, h */
+    { "Gimp",         NULL,    NULL,       0,            1,           -1,        50,  50, 500, 500 },
+    { "Chromium",     NULL,    NULL,       1 << 1,       0,           -1,        50,  50, 500, 500 },
+    { "Pavucontrol",  NULL,    NULL,       0,            1,           -1,       850,  50, 600, 400 },
+    { "Lxappearance", NULL,    NULL,       0,            1,           -1,       250, 100,  -1,  -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster        = 1;    /* number of clients in master area */
+static const int resizehints    = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
