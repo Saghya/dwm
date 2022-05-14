@@ -114,6 +114,7 @@ static Key keys[] = {
     { 0,                            XK_Print,  spawn,          SHCMD("dmenu-screenshot") },
     { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("networkmanager_dmenu -l 20") },
     { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("dmenu-bluetooth") },
+    { MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("todo") },
 };
 
 /* button definitions */
