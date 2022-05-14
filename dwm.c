@@ -98,7 +98,7 @@ struct Client {
     int x, y, w, h;
     int sfx, sfy, sfw, sfh; /* stored float geometry, used on mode revert */
     int oldx, oldy, oldw, oldh;
-    int basew, baseh, incw, inch, maxw, maxh, minw, minh;
+    int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
     int bw, oldbw;
     unsigned int tags;
     int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
@@ -382,6 +382,8 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
     if (*w < bh)
         *w = bh;
     if (resizehints || c->isfloating || !c->mon->lt[c->mon->sellt]->arrange) {
+        if (!c->hintsvalid)
+            updatesizehints(c);
         /* see last two sentences in ICCCM 4.1.2.3 */
         baseismin = c->basew == c->minw && c->baseh == c->minh;
         if (!baseismin) { /* temporarily remove base dimensions */
@@ -1164,7 +1166,7 @@ manage(Window w, XWindowAttributes *wa)
     XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
     grabbuttons(c, 0);
     if (!c->isfloating)
-        c->isfloating = c->oldstate = t || c->isfixed;
+        c->isfloating = c->oldstate = trans != None || c->isfixed;
     if (c->isfloating)
         XRaiseWindow(dpy, c->win);
     attach(c);
@@ -1331,7 +1333,7 @@ propertynotify(XEvent *e)
                 arrange(c->mon);
             break;
         case XA_WM_NORMAL_HINTS:
-            updatesizehints(c);
+            c->hintsvalid = 0;
             break;
         case XA_WM_HINTS:
             updatewmhints(c);
@@ -2097,8 +2099,9 @@ updategeom(void)
                 memcpy(&unique[j++], &info[i], sizeof(XineramaScreenInfo));
         XFree(info);
         nn = j;
-        if (n <= nn) { /* new monitors available */
-            for (i = 0; i < (nn - n); i++) {
+
+        /* new monitors if nn > n */
+        for (i = n; i < nn; i++) {
                 for (m = mons; m && m->next; m = m->next);
                 if (m)
                     m->next = createmon();
@@ -2118,7 +2121,7 @@ updategeom(void)
                     m->mh = m->wh = unique[i].height;
                     updatebarpos(m);
                 }
-        } else { /* less monitors available nn < n */
+        /* removed monitors if n > nn */
             for (i = nn; i < n; i++) {
                 for (m = mons; m && m->next; m = m->next);
                 while ((c = m->clients)) {
@@ -2133,7 +2136,6 @@ updategeom(void)
                     selmon = mons;
                 cleanupmon(m);
             }
-        }
         free(unique);
     } else
 #endif /* XINERAMA */
@@ -2211,6 +2213,7 @@ updatesizehints(Client *c)
     } else
         c->maxa = c->mina = 0.0;
     c->isfixed = (c->maxw && c->maxh && c->maxw == c->minw && c->maxh == c->minh);
+    c->hintsvalid = 1;
 }
 
 void
