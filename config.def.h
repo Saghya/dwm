@@ -33,11 +33,11 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
-    /* class       instance    title       tags mask     isfloating   monitor    float x, y, w, h */
-    { "Chromium",     NULL,    NULL,       1 << 1,       0,           -1,        50,  50,  -1,  -1 },
-    { "Zathura",      NULL,    NULL,       1 << 2,       0,           -1,        50,  50,  -1,  -1 },
-    { "Pavucontrol",  NULL,    NULL,       0,            1,           -1,       850,  50, 600, 400 },
-    { "Lxappearance", NULL,    NULL,       0,            1,           -1,       250, 100,  -1,  -1 },
+    /* class        instance    title      tags mask     isfloating   monitor    float x, y, w, h */
+    { "Google-chrome", NULL,    NULL,      1 << 1,       0,           -1,        50,  50,  -1,  -1 },
+    { "Zathura",       NULL,    NULL,      1 << 2,       0,           -1,        50,  50,  -1,  -1 },
+    { "Pavucontrol",   NULL,    NULL,      0,            1,           -1,       850,  50, 600, 400 },
+    { "Lxappearance",  NULL,    NULL,      0,            1,           -1,       250, 100,  -1,  -1 },
 };
 
 /* layout(s) */
@@ -70,7 +70,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]      = { TERMINAL, NULL };
-static const char *browser[]      = { "chromium", NULL };
+static const char *browser[]      = { "google-chrome-stable", NULL };
 static const char *file_manager[] = { TERMINAL, "-e", "ranger", NULL };
 
 static Key keys[] = {
