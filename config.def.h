@@ -38,6 +38,7 @@ static const Rule rules[] = {
     { "Zathura",       NULL,    NULL,      1 << 2,       0,           -1,        50,  50,  -1,  -1 },
     { "Pavucontrol",   NULL,    NULL,      0,            1,           -1,       850,  50, 600, 400 },
     { "Lxappearance",  NULL,    NULL,      0,            1,           -1,       250, 100,  -1,  -1 },
+    { "Pcmanfm",       NULL,    NULL,      0,            1,           -1,       250, 100,  -1,  -1 },
 };
 
 /* layout(s) */
