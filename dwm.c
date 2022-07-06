@@ -766,34 +766,32 @@ drawbar(Monitor *m)
         return;
 
     /* draw status first so it can be overdrawn by tags later */
-    if (m == selmon) { /* status is only drawn on selected monitor */
-        char *stc = stextc;
-        char *stp = stextc;
-        char tmp;
+    char *stc = stextc;
+    char *stp = stextc;
+    char tmp;
 
-        drw_setscheme(drw, scheme[SchemeStatus]);
-        x = m->ww - wstext;
-        drw_rect(drw, x, 0, LSPAD, bh, 1, 1); x += LSPAD; /* to keep left padding clean */
-        for (;;) {
-            if ((unsigned char)*stc >= ' ') {
-                    stc++;
-                    continue;
-            }
-            tmp = *stc;
-            if (stp != stc) {
-                    *stc = '\0';
-                    x = drw_text(drw, x, 0, TTEXTW(stp), bh, 0, stp, 0);
-            }
-            if (tmp == '\0')
-                    break;
-            if (tmp - DELIMITERENDCHAR - 1 < LENGTH(colors))
-                    drw_setscheme(drw, scheme[tmp - DELIMITERENDCHAR - 1]);
-            *stc = tmp;
-            stp = ++stc;
+    drw_setscheme(drw, scheme[SchemeStatus]);
+    x = m->ww - wstext;
+    drw_rect(drw, x, 0, LSPAD, bh, 1, 1); x += LSPAD; /* to keep left padding clean */
+    for (;;) {
+        if ((unsigned char)*stc >= ' ') {
+                stc++;
+                continue;
         }
-        drw_setscheme(drw, scheme[SchemeNorm]);
-        drw_rect(drw, x, 0, m->ww - x, bh, 1, 1); /* to keep right padding clean */
+        tmp = *stc;
+        if (stp != stc) {
+                *stc = '\0';
+                x = drw_text(drw, x, 0, TTEXTW(stp), bh, 0, stp, 0);
+        }
+        if (tmp == '\0')
+                break;
+        if (tmp - DELIMITERENDCHAR - 1 < LENGTH(colors))
+                drw_setscheme(drw, scheme[tmp - DELIMITERENDCHAR - 1]);
+        *stc = tmp;
+        stp = ++stc;
     }
+    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_rect(drw, x, 0, m->ww - x, bh, 1, 1); /* to keep right padding clean */
 
     for (c = m->clients; c; c = c->next) {
         occ |= c->tags;
@@ -815,11 +813,8 @@ drawbar(Monitor *m)
     drw_setscheme(drw, scheme[SchemeTagsNorm]);
     x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-    if (m == selmon) {
-            blw = w, ble = x;
-            w = m->ww - wstext - x;
-    } else
-            w = m->ww - x;
+    blw = w, ble = x;
+    w = m->ww - wstext - x;
 
     if (w > bh) {
         if (m->sel) {
@@ -1726,7 +1721,6 @@ setup(void)
     focus(NULL);
 }
 
-
 void
 seturgent(Client *c, int urg)
 {
@@ -1800,8 +1794,7 @@ signal:
 void
 spawn(const Arg *arg)
 {
-    if (arg->v == dmenucmd)
-        dmenumon[0] = '0' + selmon->num;
+    monarg[0] = '0' + selmon->num;
     if (fork() == 0) {
         if (dpy)
             close(ConnectionNumber(dpy));
@@ -2234,12 +2227,12 @@ updatestatus(void)
                     *(sts++) = *rst;
         *stp = *stc = *sts = '\0';
         wstext = TTEXTW(stextp) + LSPAD + RSPAD;
-        } else {
-            strcpy(stextc, "dwm-"VERSION);
-            strcpy(stexts, stextc);
-            wstext = TTEXTW(stextc) + LSPAD + RSPAD;
-        }
-        drawbar(selmon);
+    } else {
+        strcpy(stextc, "dwm-"VERSION);
+        strcpy(stexts, stextc);
+        wstext = TTEXTW(stextc) + LSPAD + RSPAD;
+    }
+    drawbars();
 }
 
 void

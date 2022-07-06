@@ -67,8 +67,9 @@ static const Layout layouts[] = {
 #define TERMINAL "alacritty"
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
+static char monarg[2] = "0"; /* set to ascii value of current monitor number by spawn() */
+static const char *dmenucmd[]     = { "dmenu_run", "-m", monarg, NULL };
+static const char *powermenu[]    = { "powermenu", "-m", monarg, NULL };
 static const char *termcmd[]      = { TERMINAL, NULL };
 static const char *browser[]      = { "google-chrome-stable", NULL };
 static const char *file_manager[] = { TERMINAL, "-e", "ranger", NULL };
@@ -107,9 +108,9 @@ static Key keys[] = {
     TAGKEYS(                        XK_4,                      3)
     TAGKEYS(                        XK_5,                      4)
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-    { MODKEY,                       XK_b,      spawn,          {.v = browser} },
-    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager} },
-    { MODKEY,                       XK_x,      spawn,          SHCMD("powermenu") },
+    { MODKEY,                       XK_b,      spawn,          {.v = browser } },
+    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = file_manager } },
+    { MODKEY,                       XK_x,      spawn,          {.v = powermenu } },
     { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("passmenu") },
     { 0,                            XK_Print,  spawn,          SHCMD("dmenu-screenshot") },
     { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("networkmanager_dmenu -l 20") },
