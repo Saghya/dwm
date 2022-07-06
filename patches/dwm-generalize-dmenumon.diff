@@ -1,0 +1,36 @@
+---
+config.def.h | 4 ++--
+dwm.c | 3 +--
+2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index ba9a240..0f1749f 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -55,8 +55,8 @@ static const Layout layouts[] = {
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
+/* commands */
+-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static char monarg[2] = "0"; /* set to ascii value of current monitor number by spawn() */
++static const char *dmenucmd[] = { "dmenu_run", "-m", monarg, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[] = { "st", NULL };
+
+static Key keys[] = {
+diff --git a/dwm.c b/dwm.c
+index d27cb67..a530589 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1643,8 +1643,7 @@ sigchld(int unused)
+void
+spawn(const Arg *arg)
+{
+- if (arg->v == dmenucmd)
+- dmenumon[0] = '0' + selmon->num;
++ monarg[0] = '0' + selmon->num;
+if (fork() == 0) {
+if (dpy)
+close(ConnectionNumber(dpy));
+--
+2.10.2
